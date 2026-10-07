@@ -122,9 +122,13 @@ Habis ditarik 150rb: Rp550000.0
 - [ ] Riwayat transaksi
 - [ ] Penyimpanan data ke file / database
 
-## 👨‍💻 Author
+## 👨‍💻 Identitas Pembuat
 
-**Rey Dynatha**
+| | |
+|---|---|
+| 👤 **Nama** | I Putu Reynanda Putra Dynatha |
+| 🆔 **NIM** | F1D02510115 |
+| 🏫 **Kelas** | 3B |
 
 Dibuat dengan ☕ dan semangat belajar Java.
 
