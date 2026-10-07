@@ -104,6 +104,94 @@ Habis ditarik 150rb: Rp550000.0
 4. Menampilkan nama nasabah dan jumlah akunnya
 5. Melakukan **deposit Rp200.000** dan **withdraw Rp150.000** pada akun pertama
 
+## 🗃️ Implementasi Array & ArrayList
+
+Proyek ini memakai **dua struktur data berbeda** untuk menyimpan objek, sehingga cocok untuk membandingkan keduanya secara langsung.
+
+### 1️⃣ Array → `Customer[]` di class `Bank`
+
+Array punya **ukuran tetap** yang ditentukan saat dibuat. Di sini kapasitas bank dibatasi **10 nasabah**.
+
+```java
+private Customer[] customers;     // array untuk menyimpan nasabah
+private int numberOfCustomers;    // pelacak indeks berikutnya yang kosong
+
+public Bank() {
+    customers = new Customer[10]; // ukuran tetap: 10
+    numberOfCustomers = 0;
+}
+```
+
+Karena array tidak punya method `add()` bawaan, kita memakai variabel **`numberOfCustomers`** sebagai penunjuk posisi kosong berikutnya:
+
+```java
+public void addCustomer(String f, String l) {
+    if (numberOfCustomers < customers.length) {         // cek kapasitas dulu
+        customers[numberOfCustomers] = new Customer(f, l);
+        numberOfCustomers++;                            // geser penunjuk
+    } else {
+        System.out.println("Kapasitas bank sudah penuh!");
+    }
+}
+```
+
+Pengecekan batas juga dilakukan saat mengambil data, supaya tidak terjadi `ArrayIndexOutOfBoundsException`:
+
+```java
+public Customer getCustomer(int index) {
+    if (index >= 0 && index < numberOfCustomers) {
+        return customers[index];
+    }
+    return null;
+}
+```
+
+### 2️⃣ ArrayList → `ArrayList<Account>` di class `Customer`
+
+`ArrayList` punya **ukuran dinamis**: otomatis bertambah saat elemen ditambahkan, jadi satu nasabah bisa punya akun sebanyak apa pun.
+
+```java
+private ArrayList<Account> accounts;
+
+public Customer(String f, String l) {
+    this.firstName = f;
+    this.lastName = l;
+    this.accounts = new ArrayList<Account>(); // mulai dari list kosong
+}
+```
+
+Tidak perlu penunjuk manual, cukup pakai method bawaan `add()`, `get()`, dan `size()`:
+
+```java
+public void setAccount(Account acct) {
+    accounts.add(acct);                // tambah akun, ukuran menyesuaikan
+}
+
+public Account getAccount(int account_index) {
+    if (account_index >= 0 && account_index < accounts.size()) {
+        return accounts.get(account_index);
+    }
+    return null;
+}
+
+public int getNumOfAccounts() {
+    return accounts.size();            // jumlah akun saat ini
+}
+```
+
+### ⚖️ Perbandingan
+
+| Aspek | Array (`Customer[]`) | ArrayList (`ArrayList<Account>`) |
+|-------|----------------------|----------------------------------|
+| **Ukuran** | Tetap (10) | Dinamis, tumbuh otomatis |
+| **Tambah data** | Manual: `customers[i] = ...` + `i++` | `accounts.add(...)` |
+| **Ambil data** | `customers[i]` | `accounts.get(i)` |
+| **Jumlah data** | Dilacak sendiri (`numberOfCustomers`) | `accounts.size()` |
+| **Risiko error** | Mudah `ArrayIndexOutOfBounds` jika tidak dicek | Tetap perlu cek indeks, tapi tidak ada batas kapasitas |
+| **Dipakai di** | `Bank` | `Customer` |
+
+> 💡 **Kesimpulan:** gunakan **array** bila jumlah data sudah pasti atau dibatasi, dan **ArrayList** bila jumlah data tidak bisa diprediksi.
+
 ## 💡 Konsep OOP yang Diterapkan
 
 | Konsep | Penerapan |
